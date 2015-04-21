@@ -8,4 +8,4 @@ def index(request):
 
 
 def about(request):
-    return HttpResponse('This will be the about page for UnFree Time')
+    return render(request, 'freetime/about.html')
