@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class User(models.Model):
+class Profile(models.Model):
     user_name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -24,4 +24,4 @@ class Goal(models.Model):
 
 
 class History(models.Model):
-    history_index = models.ForeignKey(User)
+    history_index = models.ForeignKey(Profile)
