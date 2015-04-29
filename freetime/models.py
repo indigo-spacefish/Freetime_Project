@@ -9,10 +9,13 @@ class Profile(models.Model):
 
 
 class Activity(models.Model):
-    activity_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.activity_name
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Activities"
 
 
 class Goal(models.Model):
@@ -23,5 +26,8 @@ class Goal(models.Model):
         return self.goal_name
 
 
-class History(models.Model):
-    history_index = models.ForeignKey(Profile)
+class Record(models.Model):
+    activity = models.ForeignKey(Activity)
+
+    def __unicode__(self):
+        return self.activity.name + " Record"
