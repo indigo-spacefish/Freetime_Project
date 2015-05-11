@@ -3,3 +3,14 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+nav p {
+    display: inline-block;
+    margin: 3em;
+}
