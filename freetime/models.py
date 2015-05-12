@@ -1,5 +1,4 @@
 from django.db import models
-import datetime
 
 
 class Profile(models.Model):
@@ -11,9 +10,19 @@ class Profile(models.Model):
         return self.user_name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Activity(models.Model):
     name = models.CharField(max_length=255)
-    category = models.ForeignKey(Category)
+    category = models.ManyToManyField(Category, blank=True)
     user_starred = models.BooleanField(default=False)
     sessions = models.IntegerField(default=0)
     last_session = models.DateTimeField("Most Recent Session", default=None)
@@ -41,13 +50,3 @@ class Record(models.Model):
 
     def __unicode__(self):
         return self.activity.name + " Record"
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "Categories"
