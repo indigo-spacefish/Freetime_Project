@@ -48,6 +48,9 @@ def populate():
                  )
 
     add_category(name="Health")
+    add_category(name="Personal Development")
+
+
 
 
 def add_profile(user_name, created_date, last_active):

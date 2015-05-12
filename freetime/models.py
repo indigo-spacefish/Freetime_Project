@@ -13,6 +13,7 @@ class Profile(models.Model):
 
 class Activity(models.Model):
     name = models.CharField(max_length=255)
+    category = models.ForeignKey(Category)
     user_starred = models.BooleanField(default=False)
     sessions = models.IntegerField(default=0)
     last_session = models.DateTimeField("Most Recent Session", default=None)
