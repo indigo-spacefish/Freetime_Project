@@ -1,6 +1,14 @@
 from django.db import models
 
 
+GOAL_TYPE_OPTIONS = (
+    (1, "Not a User Goal"),
+    (2, "Increase Frequency"),
+    (3, "Decrease Frequency"),
+    (4, "Qualitative Goal"),
+)
+
+
 class Profile(models.Model):
     user_name = models.CharField(max_length=255)
     created_date = models.DateTimeField("Date Created", default=None)
@@ -38,6 +46,7 @@ class Goal(models.Model):
     name = models.CharField(max_length=255)
     activity = models.ForeignKey(Activity)
     user_goal = models.BooleanField(default=False)
+    option_type = models.IntegerField(choices=GOAL_TYPE_OPTIONS, default=1)
 
     def __unicode__(self):
         return self.goal_name
