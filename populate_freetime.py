@@ -8,6 +8,7 @@ import datetime
 H = "health"
 P = "personal_development"
 E = "entertainment"
+A = "activity"
 
 
 def populate():
@@ -21,49 +22,43 @@ def populate():
                 last_active=datetime.datetime(2015, 5, 12, 9, 14),
                 )
 
-    add_category(name=H)
-
-    add_category(name=P)
-
-    add_category(name=E)
-
     add_activity(name="writing",
-                 category={P: P},
+                 categories=[P],
                  user_starred=True,
                  sessions=5,
-                 last_session=datetime.datetime(2015, 3, 20, 16, 30, 0),
+                 last_session=datetime.datetime(2015, 3, 20, 20, 17),
                  )
 
     add_activity(name="exercise",
-                 category={H: H},
+                 categories=[H],
                  user_starred=True,
                  sessions=2,
                  last_session=datetime.datetime(2015, 5, 10, 10, 15),
                  )
 
     add_activity(name="reading",
-                 category={P: P, E: E},
+                 categories=[E, P],
                  user_starred=True,
                  sessions=2,
-                 last_session=datetime.datetime(2015, 4, 30, 1800, 0, 0),
+                 last_session=datetime.datetime(2015, 4, 30, 18, 0),
                  )
 
     add_activity(name="bicycling",
-                 category={H: H},
+                 categories=[H],
                  user_starred=False,
                  sessions=0,
                  last_session=None,
                  )
 
     add_activity(name="cooking",
-                 category={H: H, P: P},
+                 categories=[H, P],
                  user_starred=False,
                  sessions=0,
                  last_session=None,
                  )
 
     add_activity(name="video_games",
-                 category={E: E},
+                 categories=[E],
                  user_starred=True,
                  sessions=10,
                  last_session=datetime.datetime(2015, 5, 11, 22, 32, 15),
@@ -103,7 +98,7 @@ def populate():
 
 
 def add_profile(user_name, created_date, last_active):
-    profile = Profile.objects.get_or_create()[0]
+    profile = Profile()
     profile.user_name = user_name
     profile.created_date = created_date
     profile.last_active = last_active
@@ -114,7 +109,7 @@ def add_profile(user_name, created_date, last_active):
 
 
 def add_category(name):
-    category = Category.objects.get_or_create()[0]
+    category = Category()
     category.name = name
 
     category.save()
@@ -122,9 +117,8 @@ def add_category(name):
     return category
 
 
-def add_activity(name, category, user_starred, sessions, last_session):
-    activity = Activity.objects.get_or_create()[0]
-    activity.category = [category[x] for x in category]
+def add_activity(name, categories, user_starred, sessions, last_session):
+    activity = Activity()
     activity.name = name
     activity.user_starred = user_starred
     activity.sessions = sessions
@@ -132,13 +126,19 @@ def add_activity(name, category, user_starred, sessions, last_session):
 
     activity.save()
 
+    for c in categories:
+        activity.categories.add(add_category(c))
+
+    activity.save()
+
     return activity
 
 
+# TODO change all foreign key relations from x.y = to add()
 def add_goal(name, activity, user_goal, option_type):
-    goal = Goal.objects.get_or_create()[0]
+    goal = Goal()
     goal.name = name
-    goal.activity = activity
+    goal.activity = Activity(activity)
     goal.user_goal = user_goal
     goal.option_type = option_type
 
@@ -148,8 +148,8 @@ def add_goal(name, activity, user_goal, option_type):
 
 
 def add_record(activity, date, personal_best):
-    record = Record.objects.get_or_create()[0]
-    record.activity = activity
+    record = Record()
+    record.activity = Activity(activity)
     record.date = date
     record.personal_best = personal_best
 

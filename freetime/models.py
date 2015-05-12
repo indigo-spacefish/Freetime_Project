@@ -5,21 +5,21 @@ GOAL_TYPE_OPTIONS = (
     (1, "Not a User Goal"),
     (2, "Increase Frequency"),
     (3, "Decrease Frequency"),
-    (4, "Qualitative Goal"),
+    (4, "Quantitative Goal"),
 )
 
 
 class Profile(models.Model):
     user_name = models.CharField(max_length=255)
-    created_date = models.DateTimeField("Date Created", default=None)
-    last_active = models.DateTimeField("Last Active", default=None)
+    created_date = models.DateTimeField("Date Created", default=None, null=True)
+    last_active = models.DateTimeField("Last Active", null=True)
 
     def __unicode__(self):
         return self.user_name
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
@@ -30,10 +30,10 @@ class Category(models.Model):
 
 class Activity(models.Model):
     name = models.CharField(max_length=255)
-    category = models.ManyToManyField(Category, blank=True)
+    categories = models.ManyToManyField(Category)
     user_starred = models.BooleanField(default=False)
     sessions = models.IntegerField(default=0)
-    last_session = models.DateTimeField("Most Recent Session", default=None)
+    last_session = models.DateTimeField("Most Recent Session", null=True)
 
     def __unicode__(self):
         return self.name
@@ -54,7 +54,7 @@ class Goal(models.Model):
 
 class Record(models.Model):
     activity = models.ForeignKey(Activity)
-    date = models.DateTimeField("Activity Date", default=None)
+    date = models.DateTimeField("Activity Date", null=True)
     personal_best = models.BooleanField(default=False)
 
 #    def get_personal_best(self):
