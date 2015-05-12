@@ -36,7 +36,7 @@ class Goal(models.Model):
 class Record(models.Model):
     activity = models.ForeignKey(Activity)
     date = models.DateTimeField("Activity Date", default=None)
-    personal_record = models.BooleanField(default=False)
+    personal_best = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.activity.name + " Record"
