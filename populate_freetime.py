@@ -93,6 +93,14 @@ def populate():
              option_type=4,
              )
 
+    make_records()
+
+    for a in Activity.objects.all():
+        print "Adding " + a.name
+
+    for g in Goal.objects.all():
+        print "Adding " + g.name
+
 
 def add_profile(user_name, created_date, last_active):
     profile = Profile.objects.get_or_create()[0]

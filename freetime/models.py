@@ -57,5 +57,8 @@ class Record(models.Model):
     date = models.DateTimeField("Activity Date", default=None)
     personal_best = models.BooleanField(default=False)
 
+#    def get_personal_best(self):
+#        if self.activity.user_starred:
+
     def __unicode__(self):
         return self.activity.name + " Record"
