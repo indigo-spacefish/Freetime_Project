@@ -3,10 +3,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'freetime_project.settings')
 import django
 django.setup()
 import datetime
-import pytz
 from freetime.models import Profile, Activity, Category, Goal, Record
 
-local_tz = pytz.timezone('US/Pacific')
 
 H = "health"
 P = "personal_development"
@@ -17,42 +15,34 @@ A = "activity"
 def populate():
     add_profile(
         user_name="Spacefish",
-        created_date=datetime.datetime(2015, 5, 10, tzinfo=local_tz),
+        created_date=datetime.datetime.utcnow(),
         last_active=datetime.datetime.utcnow(),
         )
 
     add_profile(
         user_name="Scotro",
-        created_date=datetime.datetime(2015, 5, 12, tzinfo=local_tz),
-        last_active=datetime.datetime(2015, 5, 12, 9, 14, tzinfo=local_tz),
+        created_date=datetime.datetime.utcnow(),
+        last_active=datetime.datetime.utcnow(),
         )
 
     health = add_category(
         name=H,
-    )
+        )
 
     personal_development = add_category(
         name=P,
-    )
+        )
 
     entertainment = add_category(
         name=E,
-    )
+        )
 
     writing = add_activity(
         name="writing",
         categories=[personal_development],
         user_starred=True,
         sessions=5,
-        last_session=datetime.datetime(
-            year=2015,
-            month=3,
-            day=20,
-            hour=19,
-            minute=17,
-            second=0,
-            microsecond=0,
-            tzinfo=7)
+        last_session=datetime.datetime.utcnow(),
         )
 
     exercise = add_activity(
@@ -60,7 +50,7 @@ def populate():
         categories=[health],
         user_starred=True,
         sessions=2,
-        last_session=datetime.datetime(2015, 5, 10, 10, 15, tzinfo=local_tz),
+        last_session=datetime.datetime.utcnow(),
         )
 
     reading = add_activity(
@@ -68,7 +58,7 @@ def populate():
         categories=[entertainment, personal_development],
         user_starred=True,
         sessions=2,
-        last_session=datetime.datetime(2015, 4, 30, 18, 0, tzinfo=local_tz),
+        last_session=datetime.datetime.utcnow(),
         )
 
     bicycling = add_activity(
@@ -92,7 +82,7 @@ def populate():
         categories=[entertainment],
         user_starred=True,
         sessions=10,
-        last_session=datetime.datetime(2015, 5, 11, 22, 32, 15, tzinfo=local_tz),
+        last_session=datetime.datetime.utcnow(),
         )
 
     add_goal(
@@ -180,7 +170,7 @@ def add_record(activity, date, personal_best):
 def make_records():
     for activity in Activity.objects.all():
         record_count = activity.sessions
-        now = datetime.datetime.now(tz=local_tz)
+        now = datetime.datetime.utcnow()
         incrementer = 1
 
         for x in range(0, record_count):
