@@ -15,93 +15,111 @@ A = "activity"
 
 
 def populate():
-    add_profile(user_name="Spacefish",
-                created_date=datetime.datetime(2015, 5, 10, tzinfo=local_tz),
-                last_active=datetime.datetime.now(tz=local_tz),
-                )
+    add_profile(
+        user_name="Spacefish",
+        created_date=datetime.datetime(2015, 5, 10, tzinfo=local_tz),
+        last_active=datetime.datetime.now(tz=local_tz),
+        )
 
-    add_profile(user_name="Scotro",
-                created_date=datetime.datetime(2015, 5, 12, tzinfo=local_tz),
-                last_active=datetime.datetime(2015, 5, 12, 9, 14, tzinfo=local_tz),
-                )
+    add_profile(
+        user_name="Scotro",
+        created_date=datetime.datetime(2015, 5, 12, tzinfo=local_tz),
+        last_active=datetime.datetime(2015, 5, 12, 9, 14, tzinfo=local_tz),
+        )
 
-    add_activity(name="writing",
-                 categories=[P],
-                 user_starred=True,
-                 sessions=5,
-                 last_session=datetime.datetime(2015, 3, 20, 20, 17, tzinfo=local_tz),
-                 )
+    health = add_category(
+        name=H,
+    )
 
-    add_activity(name="exercise",
-                 categories=[H],
-                 user_starred=True,
-                 sessions=2,
-                 last_session=datetime.datetime(2015, 5, 10, 10, 15, tzinfo=local_tz),
-                 )
+    personal_development = add_category(
+        name=P,
+    )
 
-    add_activity(name="reading",
-                 categories=[E, P],
-                 user_starred=True,
-                 sessions=2,
-                 last_session=datetime.datetime(2015, 4, 30, 18, 0, tzinfo=local_tz),
-                 )
+    entertainment = add_category(
+        name=E,
+    )
 
-    add_activity(name="bicycling",
-                 categories=[H],
-                 user_starred=False,
-                 sessions=0,
-                 last_session=None,
-                 )
+    writing = add_activity(
+        name="writing",
+        categories=[personal_development],
+        user_starred=True,
+        sessions=5,
+        last_session=datetime.datetime(2015, 3, 20, 20, 17, tzinfo=local_tz),
+        )
 
-    add_activity(name="cooking",
-                 categories=[H, P],
-                 user_starred=False,
-                 sessions=0,
-                 last_session=None,
-                 )
+    exercise = add_activity(
+        name="exercise",
+        categories=[health],
+        user_starred=True,
+        sessions=2,
+        last_session=datetime.datetime(2015, 5, 10, 10, 15, tzinfo=local_tz),
+        )
 
-    add_activity(name="video_games",
-                 categories=[E],
-                 user_starred=True,
-                 sessions=10,
-                 last_session=datetime.datetime(2015, 5, 11, 22, 32, 15, tzinfo=local_tz),
-                 )
+    reading = add_activity(
+        name="reading",
+        categories=[entertainment, personal_development],
+        user_starred=True,
+        sessions=2,
+        last_session=datetime.datetime(2015, 4, 30, 18, 0, tzinfo=local_tz),
+        )
 
-    add_goal(name="write_more",
-             activity="writing",
-             user_goal=True,
-             option_type=2,
-             )
+    bicycling = add_activity(
+        name="bicycling",
+        categories=[health],
+        user_starred=False,
+        sessions=0,
+        last_session=None,
+        )
 
-    add_goal(name="game_less",
-             activity="video_games",
-             user_goal=True,
-             option_type=3,
-             )
+    cooking = add_activity(
+        name="cooking",
+        categories=[health, personal_development],
+        user_starred=False,
+        sessions=0,
+        last_session=None,
+        )
 
-    add_goal(name="cook_more",
-             activity="cooking",
-             user_goal=False,
-             option_type=1,
-             )
+    video_games = add_activity(
+        name="video_games",
+        categories=[entertainment],
+        user_starred=True,
+        sessions=10,
+        last_session=datetime.datetime(2015, 5, 11, 22, 32, 15, tzinfo=local_tz),
+        )
 
-    add_goal(name="reading_goal",
-             activity="reading",
-             user_goal=True,
-             option_type=4,
-             )
+    add_goal(
+        name="write_more",
+        activity=writing,
+        user_goal=True,
+        option_type=2,
+        )
+
+    add_goal(
+        name="game_less",
+        activity=video_games,
+        user_goal=True,
+        option_type=3,
+        )
+
+    add_goal(
+        name="cook_more",
+        activity=cooking,
+        user_goal=False,
+        option_type=1,
+        )
+
+    add_goal(
+        name="reading_goal",
+        activity=reading,
+        user_goal=True,
+        option_type=4,
+        )
 
     make_records()
 
-    for a in Activity.objects.all():
-        print "Adding " + a.name
-
-    for g in Goal.objects.all():
-        print "Adding " + g.name
-
 
 def add_profile(user_name, created_date, last_active):
-    profile = Profile()
+    profile = Profile.objects.get_or_create()[0]
     profile.user_name = user_name
     profile.created_date = created_date
     profile.last_active = last_active
@@ -112,51 +130,42 @@ def add_profile(user_name, created_date, last_active):
 
 
 def add_category(name):
-    category = Category()
-    category.name = name
-
-    category.save()
+    category = Category.objects.get_or_create(
+        name=name,
+    )[0]
 
     return category
 
 
 def add_activity(name, categories, user_starred, sessions, last_session):
-    activity = Activity()
-    activity.name = name
-    activity.user_starred = user_starred
-    activity.sessions = sessions
-    activity.last_session = last_session
-
-    activity.save()
-
-    for c in categories:
-        activity.categories.add(add_category(c))
-
-    activity.save()
+    activity = Activity.objects.get_or_create(
+        name=name,
+        categories=categories,
+        user_starred=user_starred,
+        sessions=sessions,
+        last_session=last_session,
+    )[0]
 
     return activity
 
 
-# TODO change all foreign key relations from x.y = to add()
 def add_goal(name, activity, user_goal, option_type):
-    goal = Goal()
-    goal.name = name
-    goal.activity = Activity(activity)
-    goal.user_goal = user_goal
-    goal.option_type = option_type
-
-    goal.save()
+    goal = Goal.objects.get_or_create(
+        activity=activity,
+        name=name,
+        user_goal=user_goal,
+        option_type=option_type,
+    )[0]
 
     return goal
 
 
 def add_record(activity, date, personal_best):
-    record = Record()
-    record.activity = Activity(activity)
-    record.date = date
-    record.personal_best = personal_best
-
-    record.save()
+    record = Record.objects.get_or_create(
+        activity=activity,
+        date=date,
+        personal_best=personal_best,
+    )[0]
 
     return record
 
@@ -164,7 +173,7 @@ def add_record(activity, date, personal_best):
 def make_records():
     for activity in Activity.objects.all():
         record_count = activity.sessions
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(tz=local_tz)
         incrementer = 1
 
         for x in range(0, record_count):
@@ -175,6 +184,17 @@ def make_records():
             incrementer += 1
 
 
+def make_general_category():
+    Category.objects.get_or_create(name="General")
+
+
 if __name__ == '__main__':
     print "Starting Freetime population script..."
+    make_general_category()
     populate()
+
+    # Instrumentation
+    print Profile.objects.all()
+    print Category.objects.all()
+    print Activity.objects.all()
+    print Goal.objects.all()
