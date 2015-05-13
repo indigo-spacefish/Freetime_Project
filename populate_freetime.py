@@ -4,6 +4,9 @@ import django
 django.setup()
 from freetime.models import Profile, Activity, Category, Goal, Record
 import datetime
+import pytz
+
+local_tz = pytz.timezone('US/Pacific')
 
 H = "health"
 P = "personal_development"
@@ -13,34 +16,34 @@ A = "activity"
 
 def populate():
     add_profile(user_name="Spacefish",
-                created_date=datetime.date(2015, 5, 10),
-                last_active=datetime.datetime.now(),
+                created_date=datetime.datetime(2015, 5, 10, tzinfo=local_tz),
+                last_active=datetime.datetime.now(tz=local_tz),
                 )
 
     add_profile(user_name="Scotro",
-                created_date=datetime.datetime(2015, 5, 12),
-                last_active=datetime.datetime(2015, 5, 12, 9, 14),
+                created_date=datetime.datetime(2015, 5, 12, tzinfo=local_tz),
+                last_active=datetime.datetime(2015, 5, 12, 9, 14, tzinfo=local_tz),
                 )
 
     add_activity(name="writing",
                  categories=[P],
                  user_starred=True,
                  sessions=5,
-                 last_session=datetime.datetime(2015, 3, 20, 20, 17),
+                 last_session=datetime.datetime(2015, 3, 20, 20, 17, tzinfo=local_tz),
                  )
 
     add_activity(name="exercise",
                  categories=[H],
                  user_starred=True,
                  sessions=2,
-                 last_session=datetime.datetime(2015, 5, 10, 10, 15),
+                 last_session=datetime.datetime(2015, 5, 10, 10, 15, tzinfo=local_tz),
                  )
 
     add_activity(name="reading",
                  categories=[E, P],
                  user_starred=True,
                  sessions=2,
-                 last_session=datetime.datetime(2015, 4, 30, 18, 0),
+                 last_session=datetime.datetime(2015, 4, 30, 18, 0, tzinfo=local_tz),
                  )
 
     add_activity(name="bicycling",
@@ -61,7 +64,7 @@ def populate():
                  categories=[E],
                  user_starred=True,
                  sessions=10,
-                 last_session=datetime.datetime(2015, 5, 11, 22, 32, 15),
+                 last_session=datetime.datetime(2015, 5, 11, 22, 32, 15, tzinfo=local_tz),
                  )
 
     add_goal(name="write_more",
