@@ -2,9 +2,9 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'freetime_project.settings')
 import django
 django.setup()
-from freetime.models import Profile, Activity, Category, Goal, Record
 import datetime
 import pytz
+from freetime.models import Profile, Activity, Category, Goal, Record
 
 local_tz = pytz.timezone('US/Pacific')
 
@@ -18,7 +18,7 @@ def populate():
     add_profile(
         user_name="Spacefish",
         created_date=datetime.datetime(2015, 5, 10, tzinfo=local_tz),
-        last_active=datetime.datetime.now(tz=local_tz),
+        last_active=datetime.datetime.utcnow(),
         )
 
     add_profile(
@@ -44,7 +44,15 @@ def populate():
         categories=[personal_development],
         user_starred=True,
         sessions=5,
-        last_session=datetime.datetime(2015, 3, 20, 20, 17, tzinfo=local_tz),
+        last_session=datetime.datetime(
+            year=2015,
+            month=3,
+            day=20,
+            hour=19,
+            minute=17,
+            second=0,
+            microsecond=0,
+            tzinfo=7)
         )
 
     exercise = add_activity(
@@ -119,12 +127,11 @@ def populate():
 
 
 def add_profile(user_name, created_date, last_active):
-    profile = Profile.objects.get_or_create()[0]
-    profile.user_name = user_name
-    profile.created_date = created_date
-    profile.last_active = last_active
-
-    profile.save()
+    profile = Profile.objects.get_or_create(
+        user_name=user_name,
+        created_date=created_date,
+        last_active=last_active,
+    )[0]
 
     return profile
 

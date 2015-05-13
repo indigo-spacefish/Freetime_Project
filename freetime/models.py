@@ -10,16 +10,16 @@ GOAL_TYPE_OPTIONS = (
 
 
 class Profile(models.Model):
-    user_name = models.CharField(max_length=255, default="")
-    created_date = models.DateTimeField("Date Created", default=None, null=True)
-    last_active = models.DateTimeField("Last Active", default=None, null=True)
+    user_name = models.CharField(max_length=255)
+    created_date = models.DateTimeField("Date Created")
+    last_active = models.DateTimeField("Last Active")
 
     def __unicode__(self):
         return self.user_name
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255, default="General")
+    name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
@@ -29,11 +29,11 @@ class Category(models.Model):
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=255, default="")
+    name = models.CharField(max_length=255)
     categories = models.ManyToManyField(Category)
     user_starred = models.BooleanField(default=False)
     sessions = models.IntegerField(default=0)
-    last_session = models.DateTimeField("Most Recent Session", default=None, null=True)
+    last_session = models.DateTimeField("Most Recent Session", null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -43,7 +43,7 @@ class Activity(models.Model):
 
 
 class Goal(models.Model):
-    name = models.CharField(max_length=255, default="")
+    name = models.CharField(max_length=255)
     activity = models.ForeignKey(Activity)
     user_goal = models.BooleanField(default=False)
     option_type = models.IntegerField(default=1)
@@ -54,7 +54,7 @@ class Goal(models.Model):
 
 class Record(models.Model):
     activity = models.ForeignKey(Activity)
-    date = models.DateTimeField("Activity Date", default=None, null=True)
+    date = models.DateTimeField("Activity Date")
     personal_best = models.BooleanField(default=False)
 
 #    def get_personal_best(self):
