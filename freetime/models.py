@@ -10,7 +10,7 @@ GOAL_TYPE_OPTIONS = (
 
 
 class Profile(models.Model):
-    user_name = models.CharField(max_length=255)
+    user_name = models.CharField(max_length=255, unique=True)
     created_date = models.DateTimeField("Date Created")
     last_active = models.DateTimeField("Last Active")
 
@@ -19,7 +19,7 @@ class Profile(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name
@@ -29,11 +29,11 @@ class Category(models.Model):
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     categories = models.ManyToManyField(Category)
     user_starred = models.BooleanField(default=False)
     sessions = models.IntegerField(default=0)
-    last_session = models.DateTimeField("Most Recent Session", null=True, blank=True)
+    last_session = models.DateTimeField("Most Recent Session", null=True)
 
     def __unicode__(self):
         return self.name
@@ -43,7 +43,7 @@ class Activity(models.Model):
 
 
 class Goal(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     activity = models.ForeignKey(Activity)
     user_goal = models.BooleanField(default=False)
     option_type = models.IntegerField(default=1)
