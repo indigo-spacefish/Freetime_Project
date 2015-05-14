@@ -42,6 +42,7 @@ def populate():
         categories=[personal_development],
         user_starred=True,
         sessions=5,
+
         last_session=datetime.datetime.utcnow(),
         )
 
@@ -119,8 +120,10 @@ def populate():
 def add_profile(user_name, created_date, last_active):
     profile = Profile.objects.get_or_create(
         user_name=user_name,
-        created_date=created_date,
-        last_active=last_active,
+        defaults={
+            'created_date': created_date,
+            'last_active': last_active,
+        },
     )[0]
 
     return profile
@@ -139,32 +142,41 @@ def add_activity(name, categories, user_starred, sessions, last_session):
         activity = Activity.objects.get_or_create(
             name=name,
             defaults={
-                'categories': categories,
                 'user_starred': user_starred,
                 'sessions': sessions,
                 'last_session': last_session,
-            }
+            },
         )[0]
+
+        for x in categories:
+            activity.categories.add(x)
+            activity.save()
 
         return activity
 
 
 def add_goal(name, activity, user_goal, option_type):
     goal = Goal.objects.get_or_create(
-        activity=activity,
         name=name,
-        user_goal=user_goal,
-        option_type=option_type,
+        defaults={
+            'activity': activity,
+            'user_goal': user_goal,
+            'option_type': option_type,
+        },
     )[0]
 
     return goal
 
 
-def add_record(activity, date, personal_best):
+def add_record(user_profile, rid, activity, date, personal_best):
     record = Record.objects.get_or_create(
-        activity=activity,
-        date=date,
-        personal_best=personal_best,
+        rid=rid,
+        defaults={
+            'user_profile': user_profile,
+            'activity': activity,
+            'date': date,
+            'personal_best': personal_best,
+        },
     )[0]
 
     return record
@@ -172,20 +184,28 @@ def add_record(activity, date, personal_best):
 
 def make_records():
     for activity in Activity.objects.all():
-        record_count = activity.sessions
-        now = datetime.datetime.utcnow()
         incrementer = 1
+        record_count = activity.sessions
+
+        record_user = Profile.objects.get(user_name='Spacefish')
+        now = datetime.datetime.utcnow()
+
+        def make_rid():
+            return str(incrementer) + " : " + record_user.user_name
 
         for x in range(0, record_count):
-            add_record(activity=activity,
-                       date=(now - datetime.timedelta(days=incrementer)),
-                       personal_best=False,
-                       )
+            add_record(
+                user_profile=record_user,
+                rid=make_rid(),
+                activity=activity,
+                date=(now - datetime.timedelta(days=incrementer)),
+                personal_best=False,
+            )
             incrementer += 1
 
 
 def make_general_category():
-    Category.objects.get_or_create(name="General")
+    Category.objects.get_or_create(name="general")
 
 
 if __name__ == '__main__':

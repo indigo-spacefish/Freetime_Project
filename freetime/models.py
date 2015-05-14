@@ -49,10 +49,12 @@ class Goal(models.Model):
     option_type = models.IntegerField(default=1)
 
     def __unicode__(self):
-        return self.goal_name
+        return self.name
 
 
 class Record(models.Model):
+    user_profile = models.ForeignKey(Profile)
+    rid = models.CharField(max_length=255, unique=True)
     activity = models.ForeignKey(Activity)
     date = models.DateTimeField("Activity Date")
     personal_best = models.BooleanField(default=False)
