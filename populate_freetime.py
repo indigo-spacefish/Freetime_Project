@@ -135,15 +135,18 @@ def add_category(name):
 
 
 def add_activity(name, categories, user_starred, sessions, last_session):
-    activity = Activity.objects.get_or_create(
-        name=name,
-        categories=categories,
-        user_starred=user_starred,
-        sessions=sessions,
-        last_session=last_session,
-    )[0]
+    if not Activity.objects.filter(name=name) in Activity.objects.all():
+        activity = Activity.objects.get_or_create(
+            name=name,
+            defaults={
+                'categories': categories,
+                'user_starred': user_starred,
+                'sessions': sessions,
+                'last_session': last_session,
+            }
+        )[0]
 
-    return activity
+        return activity
 
 
 def add_goal(name, activity, user_goal, option_type):
