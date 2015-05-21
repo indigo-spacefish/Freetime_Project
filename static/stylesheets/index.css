@@ -14,3 +14,11 @@ nav p {
     display: inline-block;
     margin: 3em;
 }
+
+.show {
+    display: inline-block;
+}
+
+.hide {
+    display: none;
+}
