@@ -2,7 +2,7 @@
 
 {% load static %}
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
     <head>
         <meta charset="UTF-8">
@@ -11,7 +11,7 @@
         <link rel="icon" type="ico" href="{% static 'images/uft.ico' %}">
     </head>
 
-    <body background="{% static 'images/freetime_field.jpg' %}">
+    <body>
 
     <header>
             <h1>Welcome to UnFree Time!</h1>
@@ -23,10 +23,27 @@
         <p>Log In</p>
     </nav>
 
-        <p>Nice to see you again, <strong>{{ user_name }}</strong><br /></p>
+    <section>
 
-        <a href="/freetime/about/">About</a><br />
+        <div id="carousel">
+            <img src="{% static 'images/library.jpg' %}">
+            <img src="{% static 'images/skiing.jpg' %}">
+            <img src="{% static 'images/exercise.jpg' %}">
+            <img src="{% static 'images/hiking.jpg' %}">
+        </div>
+
+        <div id="carousel_nav">
+
+        </div>
+
+    </section>
+
+    <p>Nice to see you again, <strong>{{ user_name }}</strong><br /></p>
+
+    <a href="/freetime/about/">About</a><br />
 
     </body>
+
+    <script src="{% static 'scripts/index.js' %}"></script>
 
 </html>
