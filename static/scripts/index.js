@@ -9,7 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function carouselForward() {
         currentImage.classList.add('hide');
         currentImage.classList.remove('show');
-        var nextImage = currentImage.nextElementSibling;
+        if (currentImage == document.getElementById('c4')) {
+            var nextImage = document.getElementById('c1')
+        }
+        else {
+            nextImage = currentImage.nextElementSibling;
+        }
         nextImage.classList.remove('hide');
         nextImage.classList.add('show');
         currentImage = nextImage;
@@ -19,7 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function carouselBack() {
         currentImage.classList.add('hide');
         currentImage.classList.remove('show');
-        var prevImage = currentImage.previousElementSibling;
+        if (currentImage == document.getElementById('c1')) {
+            var prevImage = document.getElementById('c4');
+        }
+        else {
+            prevImage = currentImage.previousElementSibling;
+        }
         prevImage.classList.remove('hide');
         prevImage.classList.add('show');
         currentImage = prevImage;
