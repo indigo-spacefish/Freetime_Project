@@ -26,10 +26,12 @@
     <section>
 
         <div id="carousel">
-            <img class=".hide" src="{% static 'images/library.jpg' %}">
-            <img class=".hide" src="{% static 'images/skiing.jpg' %}">
-            <img class=".hide" src="{% static 'images/exercise.jpg' %}">
-            <img class=".hide" src="{% static 'images/hiking.jpg' %}">
+
+            <div class="show" content="{% static 'images/library.jpg' %}"></div>
+            <div class="hide" content="{% static 'images/skiing.jpg' %}"> </div>
+            <div class="hide" content="{% static 'images/exercise.jpg' %}"></div>
+            <div class="hide" content="{% static 'images/hiking.jpg' %}"></div>
+
         </div>
 
         <div id="carousel_nav">

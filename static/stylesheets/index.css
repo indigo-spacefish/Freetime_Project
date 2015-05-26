@@ -1,9 +1,3 @@
-body {
-    color: #acccff;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 nav {
     position: absolute;
     right: 0;
@@ -16,9 +10,16 @@ nav p {
 }
 
 .show {
-    display: inline-block;
+    display: block;
 }
 
 .hide {
     display: none;
+}
+
+#carousel * {
+    width: 80vw;
+    height: 40vh;
+    margin-left: auto;
+    margin-right: auto;
 }
