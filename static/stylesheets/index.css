@@ -34,15 +34,15 @@ nav p {
 #backArrow {
     width: 0;
     height: 0;
-    border-top: .25em solid transparent;
-    border-right: .5em solid black;
-    border-bottom: .25em solid transparent;
+    border-top: 2vw solid transparent;
+    border-right: 2vw solid black;
+    border-bottom: 2vw solid transparent;
 }
 
 #forwardArrow {
     width: 0;
     height: 0;
-    border-top: .25em solid transparent;
-    border-left: .5em solid black;
-    border-bottom: .25em solid transparent;
+    border-top: 2vw solid transparent;
+    border-left: 2vw solid black;
+    border-bottom: 2vw solid transparent;
 }
