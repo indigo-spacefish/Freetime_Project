@@ -1,22 +1,28 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     var carousel = document.getElementById('carousel');
-    var currentImage = document.getElementsByClassName('show');
+    var currentImage = document.getElementById('c1');
     var forwardBtn = document.getElementById('forwardArrow');
     var backBtn = document.getElementById('backArrow');
 
 
     function carouselForward() {
-        currentImage.style.display = 'none';
-        currentImage = currentImage.nextElementSibling;
-        currentImage.style.display = 'inline-block';
+        currentImage.classList.add('hide');
+        currentImage.classList.remove('show');
+        var nextImage = currentImage.nextElementSibling;
+        nextImage.classList.remove('hide');
+        nextImage.classList.add('show');
+        currentImage = nextImage;
     }
 
 
     function carouselBack() {
-        currentImage.style.display = 'none';
-        currentImage = currentImage.previousElementSibling;
-        currentImage.style.display = 'inline-block';
+        currentImage.classList.add('hide');
+        currentImage.classList.remove('show');
+        var prevImage = currentImage.previousElementSibling;
+        prevImage.classList.remove('hide');
+        prevImage.classList.add('show');
+        currentImage = prevImage;
     }
 
 
