@@ -10,11 +10,16 @@ nav p {
 }
 
 .show {
-    display: block;
+    display: inline-block;
 }
 
 .hide {
     display: none;
+}
+
+.carouselBtn {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #carousel * {
@@ -22,4 +27,22 @@ nav p {
     height: 40vh;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#backArrow {
+    width: 0;
+    height: 0;
+    border-top: .25em solid transparent;
+    border-right: .5em solid black;
+    border-bottom: .25em solid transparent;
+}
+
+#forwardArrow {
+    width: 0;
+    height: 0;
+    border-top: .25em solid transparent;
+    border-left: .5em solid black;
+    border-bottom: .25em solid transparent;
 }
