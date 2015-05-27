@@ -9,6 +9,10 @@ nav p {
     margin: 3em;
 }
 
+header * {
+    margin-left: 5vw;
+}
+
 .show {
     display: inline-block;
     height: 40vh;
@@ -19,6 +23,8 @@ nav p {
 
 .hide {
     display: none;
+    height: 0;
+    width: 0;
 }
 
 .carouselBtn {
@@ -46,4 +52,10 @@ nav p {
 #carousel, #carousel * {
     text-align: center;
     vertical-align: middle;
+}
+
+#carousel_text {
+    text-align: center;
+    font-size: 200%;
+    margin-top: 1vh;
 }

@@ -14,10 +14,12 @@
     <body>
 
     <header>
-            <h1>Welcome to UnFree Time!</h1>
+        <h1>Welcome to UnFree Time!</h1>
+        <p>Nice to see you again, <strong>{{ user_name }}</strong></p>
     </header>
 
     <nav>
+        <a href="/freetime/about/">About</a>
         <p>Share</p>
         <p>History</p>
         <p>Log In</p>
@@ -27,26 +29,29 @@
 
         <div id="carousel">
 
-            <span id="backArrow" class="carouselBtn"></span>
+            <a id="backArrow" class="carouselBtn"></a>
 
             <img id="c1" class="show" src="{% static 'images/library.jpg' %}">
             <img id="c2" class="hide" src="{% static 'images/skiing.jpg' %}">
             <img id="c3" class="hide" src="{% static 'images/exercise.jpg' %}">
             <img id="c4" class="hide" src="{% static 'images/hiking.jpg' %}">
 
-            <span id="forwardArrow" class="carouselBtn"></span>
+            <a id="forwardArrow" class="carouselBtn"></a>
 
         </div>
 
-        <div id="carousel_nav">
-
+        <div id="carousel_text">
+            Finish writing that novel, or make a dent in your to-read pile.
         </div>
 
     </section>
 
-    <p>Nice to see you again, <strong>{{ user_name }}</strong><br /></p>
+    <section>
 
-    <a href="/freetime/about/">About</a><br />
+        <a href="">Report an Activity</a>
+        <a href="">Create a Goal</a>
+
+    </section>
 
     </body>
 
