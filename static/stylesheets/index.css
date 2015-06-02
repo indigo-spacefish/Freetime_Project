@@ -13,6 +13,11 @@ header * {
     margin-left: 5vw;
 }
 
+.column {
+    display: inline-block;
+    width: 30vw;
+}
+
 .show {
     display: inline-block;
     height: 40vh;
